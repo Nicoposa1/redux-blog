@@ -4,23 +4,14 @@ function App() {
 
   const [users, setUsers] = useState([])
 
-  useEffect(async () => {
-    const response = await
-    fetch('https://jsonplaceholder.typicode.com/users')
-    const data = await response.json()
-    setUsers(data)
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch('https://jsonplaceholder.typicode.com/users')
+      const data = await response.json()
+      setUsers(data)
+    }
+    fetchUsers()
   }, [])
-
-
-  handleFiles = () => (
-    this.state.users.map((user) => (
-      <tr>
-        <td>{name}</td>
-        <td>{user.mail}</td>
-        <td>{user.page}</td>
-      </tr>
-    ))
-  )
 
   return (
     <div className="margen">
@@ -35,11 +26,11 @@ function App() {
         <tbody>
           {users.map(user => {
             return (
-              <th>
-                <tr>{user.name}</tr>
-                <tr>{user.mail}</tr>
-                <tr>{user.link}</tr>
-              </th>
+              <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.website}</td>
+              </tr>
             )
           })}
         </tbody>
