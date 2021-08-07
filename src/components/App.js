@@ -1,41 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+import Menu from './Menu'
+import Users from './Users'
+import Tasks from './Tasks'
 
-function App() {
-
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await fetch('https://jsonplaceholder.typicode.com/users')
-      const data = await response.json()
-      setUsers(data)
-    }
-    fetchUsers()
-  }, [])
-
+const App = () => {
   return (
-    <div className="margen">
-      <table className='tabla'>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Enlace</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => {
-            return (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.website}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
+    <BrowserRouter>
+      <Menu />
+      <Route exact path='/' component={Users} />
+      <Route exact path='/tasks' component={Tasks} />
+    </BrowserRouter>
   )
 }
 
