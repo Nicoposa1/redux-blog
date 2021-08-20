@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 
-function Users() {
+function Usuarios(props) {
 
-  const [users, setUsers] = useState([])
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await fetch('https://jsonplaceholder.typicode.com/users')
-      const data = await response.json()
-      setUsers(data)
-    }
-    fetchUsers()
-  }, [])
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const response = await fetch('https://jsonplaceholder.typicode.com/users')
+  //     const data = await response.json()
+  //     setUsers(data)
+  //   }
+  //   fetchUsers()
+  // }, [])  
+
 
   return (
-    <div className="margen">
+    <div>
       <table className='tabla'>
         <thead>
           <tr>
@@ -24,7 +25,7 @@ function Users() {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => {
+          {props.users.map(user => {
             return (
               <tr key={user.id}>
                 <td>{user.name}</td>
@@ -39,4 +40,8 @@ function Users() {
   )
 }
 
-export default Users
+const mapStateToProps = (reducers) => {
+	return reducers.usuariosReducer;
+};
+
+export default connect(mapStateToProps, {/*Accion Creator*/})(Usuarios);
