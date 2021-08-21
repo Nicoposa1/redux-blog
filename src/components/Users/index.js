@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import * as usuariosActions from '../../store/actions/usuariosActions'
 
 function Usuarios(props) {
 
+  const [users, setUsers] = useState([]) 
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const response = await fetch('https://jsonplaceholder.typicode.com/users')
-  //     const data = await response.json()
-  //     setUsers(data)
-  //   }
-  //   fetchUsers()
-  // }, [])  
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch('https://jsonplaceholder.typicode.com/users')
+      const data = await response.json()
+      setUsers(data)
+      console.log(props)
+      props.traerTodos()
+    }
+    fetchUsers()
+  }, [])  
 
 
   return (
@@ -25,7 +29,7 @@ function Usuarios(props) {
           </tr>
         </thead>
         <tbody>
-          {props.users.map(user => {
+          {users.map(user => {
             return (
               <tr key={user.id}>
                 <td>{user.name}</td>
@@ -44,4 +48,4 @@ const mapStateToProps = (reducers) => {
 	return reducers.usuariosReducer;
 };
 
-export default connect(mapStateToProps, {/*Accion Creator*/})(Usuarios);
+export default connect(mapStateToProps, usuariosActions)(Usuarios);
